@@ -7,7 +7,13 @@ describe("finds 2020", () => {
     expect(find2020(input)).toEqual([20, 2000]);
   });
 
-  it("finds two entries that sum to 2020 and then multiply those two numbers together", () => {
+  it("finds 3 numbers that add up to 2020", () => {
+    const input = [123, 1010, 20, 30, 1970];
+
+    expect(find2020of3(input)).toEqual([20, 30, 1970]);
+  });
+
+  describe("task", () => {
     const input = [
       1732, 1972, 1822, 1920, 1847, 1718, 1827, 1973, 1936, 1865, 1817, 1954, 1939, 1979, 1846, 1989, 1818, 398, 1786,
       1900, 1949, 1161, 609, 1967, 1845, 1795, 1874, 1982, 2010, 1494, 1752, 1803, 1908, 1876, 1977, 1999, 1858, 1885,
@@ -22,14 +28,13 @@ describe("finds 2020", () => {
       1824, 1796, 1930, 1777, 1886, 477, 1761, 1800, 1745, 1993
     ];
 
-    const actual = find2020(input);
+    test("part 1", () => {
+      expect(find2020(input)).toEqual([1371, 649]);
+    })
 
-    expect(actual).toEqual([1371, 649]);
+    test("part 2", () => {
+      expect(find2020of3(input)).toEqual([398, 1494, 128]);
+      expect(398 * 1494 * 128).toEqual(76110336);
+    })
   })
-
-  it("finds 3 numbers that add up to 2020", () => {
-    const input = [123, 1010, 20, 30, 1970];
-
-    expect(find2020of3(input)).toEqual([20, 30, 1970]);
-  });
 });
