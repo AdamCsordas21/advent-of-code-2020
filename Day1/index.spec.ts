@@ -1,4 +1,4 @@
-import { find2020 } from ".";
+import { find2020, find2020of3 } from ".";
 
 describe("finds 2020", () => {
   it("finds 2 numbers that add up to 2020", () => {
@@ -26,4 +26,10 @@ describe("finds 2020", () => {
 
     expect(actual).toEqual([1371, 649]);
   })
+
+  it("finds 3 numbers that add up to 2020", () => {
+    const input = [123, 1010, 20, 30, 1970];
+
+    expect(find2020of3(input)).toEqual([20, 30, 1970]);
+  });
 });
