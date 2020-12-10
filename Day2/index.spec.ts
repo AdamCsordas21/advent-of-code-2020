@@ -1,4 +1,4 @@
-import { input2lines, isValid, validPasswords } from '.'
+import { input2lines, isValid, isValid2, validPasswords, validPasswords2 } from '.'
 
 describe('validate password', () => {
   const input = `1-3 a: abcde
@@ -19,6 +19,14 @@ describe('validate password', () => {
     ['2-9 c: ccccccccc', true],
   ])('validates password %s => %s', (line, shouldBeValid) => {
     expect(isValid(line)).toEqual(shouldBeValid)
+  })
+
+  it.each<[string, boolean]>([
+    ['1-3 a: abcde', true],
+    ['1-3 b: cdefg', false],
+    ['2-9 c: ccccccccc', false],
+  ])('validates password using positions %s => %s', (line, shouldBeValid) => {
+    expect(isValid2(line)).toEqual(shouldBeValid)
   })
 
   it('counts valid passwords', () => {
@@ -1029,6 +1037,10 @@ describe('validate password', () => {
 
     test('part 1', () => {
       expect(validPasswords(input)).toEqual(666)
+    })
+
+    test('part 2', () => {
+      expect(validPasswords2(input)).toEqual(670)
     })
   })
 })
