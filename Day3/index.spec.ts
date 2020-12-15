@@ -1,4 +1,4 @@
-import { countTrees, input2rows, isTreeAt } from '.'
+import { countTrees, input2rows, isTreeAt, multiplyTreesOnSlopes } from '.'
 
 describe('toboggan trajectory', () => {
   const sampleInput = `..##.......
@@ -46,8 +46,18 @@ describe('toboggan trajectory', () => {
     expect(isTreeAt(row, column)).toEqual(isTree)
   })
 
-  it('counts trees on a slope 1 down 3 right', () => {
-    expect(countTrees(sampleInput)).toEqual(7)
+  it.each<[down: number, right: number, expected: number]>([
+    [1, 1, 2],
+    [1, 3, 7],
+    [1, 5, 3],
+    [1, 7, 4],
+    [2, 1, 2],
+  ])('counts trees on a slope %d down %d right => %d', (down, right, expected) => {
+    expect(countTrees(sampleInput, down, right)).toEqual(expected)
+  })
+
+  it('multiplies trees on slopes', () => {
+    expect(multiplyTreesOnSlopes(sampleInput, [[1, 1], [1, 3], [1, 5], [1, 7], [2, 1]])).toEqual(336)
   })
 
   describe('task', () => {
@@ -376,7 +386,11 @@ describe('toboggan trajectory', () => {
 .....##.#.......#.#........#...`
 
     test('part 1', () => {
-      expect(countTrees(input)).toEqual(270)
+      expect(countTrees(input, 1, 3)).toEqual(270)
+    })
+
+    test('part 2', () => {
+      expect(multiplyTreesOnSlopes(input, [[1, 1], [1, 3], [1, 5], [1, 7], [2, 1]])).toEqual(2122848000)
     })
   })
 })
