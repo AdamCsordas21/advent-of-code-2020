@@ -16,3 +16,9 @@ export const validateFields = (passport: string): boolean =>
     .map(requiredField => passport.split(' ').map(field => field.substring(0, 3)).includes(requiredField))
     .filter(f => !!f)
     .length === requiredFields.length
+
+
+export const countValidPassports = (input: string): number => input2passports(input)
+  .map(p => validateFields(p))
+  .filter(p => !!p)
+  .length
