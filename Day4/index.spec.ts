@@ -13,6 +13,8 @@ import {
   isValidIyr,
   validateFields,
   isValidHcl,
+  isValidEcl,
+  extractEcl,
 } from './index'
 
 describe('passport processing', () => {
@@ -67,6 +69,7 @@ iyr:2011 ecl:brn hgt:59in`
     ['eyr', '2020', extractEyr],
     ['hgt', '183cm', extractHgt],
     ['hcl', '#fffffd', extractHcl],
+    ['ecl', 'gry', extractEcl],
   ])('extracts %s field from passport => %s', (_, expected, extractor) => {
     const passport = 'ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
     expect(extractor(passport)).toEqual(expected)
@@ -116,8 +119,21 @@ iyr:2011 ecl:brn hgt:59in`
     expect(isValidHcl(hcl)).toEqual(expected)
   })
 
+  it.each<[ecl: string, expected: boolean]>([
+    ['amb', true],
+    ['blu', true],
+    ['brn', true],
+    ['gry', true],
+    ['grn', true],
+    ['hzl', true],
+    ['oth', true],
+    ['adam', false],
+  ])('validates ecl %s => %s', (ecl, expected) => {
+    expect(isValidEcl(ecl)).toEqual(expected)
+  })
+
   it('validates passport fields', () => {
-    const passport = 'ecl:gry0 pid:8600333270 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
+    const passport = 'ecl:gry pid:8600333270 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
     expect(validateFields(passport)).toEqual(true)
   })
 

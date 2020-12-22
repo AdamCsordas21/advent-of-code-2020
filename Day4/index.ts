@@ -31,6 +31,7 @@ export const extractIyr = extract('iyr')
 export const extractEyr = extract('eyr')
 export const extractHgt = extract('hgt')
 export const extractHcl = extract('hcl')
+export const extractEcl = extract('ecl')
 
 const inRange = (min: number, max: number) => (input: number) => input >= min && input <= max
 
@@ -93,6 +94,8 @@ export const isValidHcl = (hcl: string): boolean => {
   return true
 }
 
+export const isValidEcl = (ecl: string): boolean => ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(ecl)
+
 export const validateFields = (passport: string): boolean => {
   if (!checkForRequiredFields(passport)) {
     return false
@@ -110,6 +113,9 @@ export const validateFields = (passport: string): boolean => {
     return false
   }
   if (!isValidHcl(extractHcl(passport))) {
+    return false
+  }
+  if (!isValidEcl(extractEcl(passport))) {
     return false
   }
   return true
