@@ -18,6 +18,7 @@ import {
   isValidEcl,
   isValidPid,
   extractPid,
+  countPassportsWithValidFields,
 } from './index'
 
 describe('passport processing', () => {
@@ -1115,6 +1116,10 @@ ecl:brn eyr:2024`
 
     it('part 1', () => {
       expect(countPassportsWithRequiredFields(input)).toEqual(182)
+    })
+
+    it('part 2', () => {
+      expect(countPassportsWithValidFields(input)).toEqual(109)
     })
   })
 })

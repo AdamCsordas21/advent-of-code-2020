@@ -18,7 +18,7 @@ export const checkForRequiredFields = (passport: string): boolean =>
     .length === requiredFields.length
 
 export const countPassportsWithRequiredFields = (input: string): number => input2passports(input)
-  .map(p => checkForRequiredFields(p))
+  .map(checkForRequiredFields)
   .filter(p => !!p)
   .length
 
@@ -126,3 +126,8 @@ export const validateFields = (passport: string): boolean => {
   }
   return true
 }
+
+export const countPassportsWithValidFields = (input: string): number => input2passports(input)
+  .map(validateFields)
+  .filter(p => !!p)
+  .length
