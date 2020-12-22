@@ -1,3 +1,4 @@
+import { pid } from 'process'
 import {
   checkForRequiredFields,
   countPassportsWithRequiredFields,
@@ -6,6 +7,7 @@ import {
   extractEyr,
   extractHgt,
   extractHcl,
+  extractEcl,
   input2passports,
   isValidByr,
   isValidEyr,
@@ -14,7 +16,8 @@ import {
   validateFields,
   isValidHcl,
   isValidEcl,
-  extractEcl,
+  isValidPid,
+  extractPid,
 } from './index'
 
 describe('passport processing', () => {
@@ -70,6 +73,7 @@ iyr:2011 ecl:brn hgt:59in`
     ['hgt', '183cm', extractHgt],
     ['hcl', '#fffffd', extractHcl],
     ['ecl', 'gry', extractEcl],
+    ['pid', '860033327', extractPid]
   ])('extracts %s field from passport => %s', (_, expected, extractor) => {
     const passport = 'ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
     expect(extractor(passport)).toEqual(expected)
@@ -131,9 +135,22 @@ iyr:2011 ecl:brn hgt:59in`
   ])('validates ecl %s => %s', (ecl, expected) => {
     expect(isValidEcl(ecl)).toEqual(expected)
   })
+  
+  it.each<[pid: string, expected: boolean]>([
+    ['000000000', true],
+    ['012345678', true],
+    ['999999999', true],
+    ['123456789', true],
+    ['12345678a', false],
+    ['0001234567', false],
+    ['00012346', false],
+    ['0000123456', false],
+  ])('validates pid %s => %s', (pid, expected) => {
+    expect(isValidPid(pid)).toEqual(expected)
+  })
 
   it('validates passport fields', () => {
-    const passport = 'ecl:gry pid:8600333270 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
+    const passport = 'ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
     expect(validateFields(passport)).toEqual(true)
   })
 
