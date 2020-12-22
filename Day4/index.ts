@@ -27,12 +27,10 @@ const extract = (field: string) => (passport: string): string => passport.split(
   .slice(4)
 
 export const extractByr = extract('byr')
-
 export const extractIyr = extract('iyr')
-
 export const extractEyr = extract('eyr')
-
 export const extractHgt = extract('hgt')
+export const extractHcl = extract('hcl')
 
 const inRange = (min: number, max: number) => (input: number) => input >= min && input <= max
 
@@ -58,6 +56,43 @@ export const isValidHgt = (hgt: string): boolean => {
   return false
 }
 
+export const isValidHcl = (hcl: string): boolean => {
+  /* First way: regular expression
+  return /^#[0-9a-f]{6}$/.test(hcl)
+  */
+
+  /* Second way: parse number as hexadecimal 
+  if (hcl.length !== 7) {
+    return false
+  }
+  
+  if (!hcl.startsWith('#')) {
+    return false
+  }
+
+  const number = parseInt(hcl.slice(1), 16)
+  if (isNaN(number)) {
+    return false
+  }
+  return inRange(0, 0xffffff)(number)
+  */
+
+  // Third way: check each character individually
+  if (hcl.length !== 7) {
+    return false
+  }
+  if (hcl[0] !== '#') {
+    return false
+  }
+  const validChars = '0123456789abcdef'.split('')
+  for (const char of hcl.slice(1)) {
+    if (!validChars.includes(char)) {
+      return false
+    }
+  }
+  return true
+}
+
 export const validateFields = (passport: string): boolean => {
   if (!checkForRequiredFields(passport)) {
     return false
@@ -72,6 +107,9 @@ export const validateFields = (passport: string): boolean => {
     return false
   }
   if (!isValidHgt(extractHgt(passport))) {
+    return false
+  }
+  if (!isValidHcl(extractHcl(passport))) {
     return false
   }
   return true
