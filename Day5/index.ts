@@ -15,3 +15,7 @@ export const getColumnNumber = (column: string): number => {
   }
   return columnNumber
 }
+
+export const getSeatId = (seat: string): number =>
+  getRowNumber(seat.slice(0, 7)) * 8 + getColumnNumber(seat.slice(7))
+

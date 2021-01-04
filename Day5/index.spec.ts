@@ -1,6 +1,7 @@
 import {
   getColumnNumber,
   getRowNumber,
+  getSeatId,
 } from '.'
 
 describe('binary boarding', () => {
@@ -18,5 +19,9 @@ describe('binary boarding', () => {
     ['RRR', 7],
   ])('calculates column number for %s => %s', (column, expected) => {
     expect(getColumnNumber(column)).toEqual(expected)
+  })
+  
+  it('calculates seat ID', () => {
+    expect(getSeatId('FBFBBFFRLR')).toEqual(357)
   })
 })
