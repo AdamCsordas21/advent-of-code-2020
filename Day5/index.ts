@@ -6,3 +6,12 @@ export const getRowNumber = (row: string): number => {
   }
   return rowNumber
 }
+
+export const getColumnNumber = (column: string): number => {
+  let columnNumber = 0
+  let columns = 4
+  for (let i = 0; i < 3; i++, columns /= 2) {
+    if (column[i] === 'R') columnNumber += columns
+  }
+  return columnNumber
+}
