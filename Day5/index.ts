@@ -41,3 +41,7 @@ export const getSeatIdRegex = (seat: string): number =>
 
 export const getSeatIdRegex2 = (seat: string): number =>
   parseInt(seat.replace(/./g, c => ['F', 'L'].includes(c) ? '0' : '1'), 2)
+
+export const input2Seats = (input: string): string[] => input.split('\n')
+
+export const findHighestSeatId = (input: string): number => Math.max(...input2Seats(input).map(getSeatId))
