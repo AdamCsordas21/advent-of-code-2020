@@ -45,3 +45,50 @@ export const getSeatIdRegex2 = (seat: string): number =>
 export const input2Seats = (input: string): string[] => input.split('\n')
 
 export const findHighestSeatId = (input: string): number => Math.max(...input2Seats(input).map(getSeatId))
+
+// [3, 4, 5, 7]
+export const findMissingSeatId = (input: string): number => {
+  const seatIds = input2Seats(input).map(getSeatId).sort((a, b) => a - b)
+  for (let i = 0; i < seatIds.length; ++i) {
+    const actualNextSeatId = seatIds[i + 1]
+    const expectedNextSeatId = seatIds[i] + 1
+    if (actualNextSeatId !== expectedNextSeatId) {
+      return expectedNextSeatId
+    }
+  }
+}
+
+// const rep = (number: number): string => {
+//   console.log('hello', number)
+//   const osh = 'osh'.repeat(number)
+//   return osh
+// }
+
+// const adam = (number: number): string[] => {
+//   const adams = Array.from({ length: number }, _ => 'adam')
+//   adams.push('nela')
+//   const oshes = rep(3)
+//   adams.push(oshes)
+//   return adams
+// }
+
+// export const debugMe = (n: number): number => {
+//   console.log('hello')
+//   const i = 'osh'
+//   const you = 'adam'
+//   const we = `${i} and ${you}` 
+//   console.log(i, you)
+//   const nums = [1, 2, 3]
+//   nums.map(n => {
+//     let newN = n + 1
+//     return newN
+//   })
+//   nums.map(n => n + 1)
+//   if (n > 2) {
+//     adam(n)
+//     return 2
+//   }
+//   if (n > 0) {
+//     return n
+//   }
+// }

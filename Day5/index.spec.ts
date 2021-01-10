@@ -10,6 +10,8 @@ import {
   getSeatIdRegex2,
   findHighestSeatId,
   input2Seats,
+  findMissingSeatId,
+  // debugMe,
 } from '.'
 
 describe('binary boarding', () => {
@@ -989,4 +991,12 @@ FFBFFFFRRR`
   it('finds the highest seat ID on a boarding pass', () => {
     expect(findHighestSeatId(input)).toEqual(963)
   })
+
+  it('finds the missing seat id', () => {
+    expect(findMissingSeatId(input)).toEqual(592)
+  })
+
+  // it('debugs', () => {
+  //   expect(debugMe(6)).toEqual(3)
+  // })
 })
