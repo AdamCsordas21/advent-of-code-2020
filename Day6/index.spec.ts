@@ -5,6 +5,9 @@ import {
   input2groups,
   sumUniqueAnswersAcrossGroups,
   sum,
+  group2people,
+  groups2AllYesAnswers,
+  sumAllAnswersAcrossGroups,
 } from '.'
 
 describe('task', () => {
@@ -60,6 +63,18 @@ b`
 */
 
     expect(groups2UniqueYesAnswers(input)).toEqual(expected)
+  })
+
+  it('splits answers of group into answers per person', () => {
+    const group = 'abc\na'
+    const expected =  ['abc', 'a']
+    expect(group2people(group)).toEqual(expected)
+  })
+
+  it('splits group into all yes answers in a group', () => {
+    const input = 'abc\nab\na'
+    const expected = 'a'
+    expect(groups2AllYesAnswers(input)).toEqual(expected)
   })
 
   it('counts unique yes answers in a group', () => {
@@ -2301,5 +2316,8 @@ dpmqchxtnlbyf
 hnpqlxydfm`
     const expected = 6775
     expect(sumUniqueAnswersAcrossGroups(input)).toEqual(expected)
+    // @todo
+    const expected2 = 3356
+    expect(sumAllAnswersAcrossGroups(input)).toEqual(expected2)
   })
 })
